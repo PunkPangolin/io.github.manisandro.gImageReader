@@ -1,0 +1,347 @@
+{
+    "app-id": "io.github.manisandro.gImageReader",
+    "runtime": "org.kde.Platform",
+    "runtime-version": "6.9",
+    "sdk": "org.kde.Sdk",
+    "command": "gimagereader-qt6",
+    "rename-desktop-file": "gimagereader-qt6.desktop",
+    "rename-appdata-file": "gimagereader-qt6.appdata.xml",
+    "rename-icon": "gimagereader",
+    "add-extensions": {
+        "io.github.manisandro.gImageReader.tessdata": {
+            "directory": "share/tessdata",
+            "version": "4.1.0",
+            "bundle": true
+        }
+    },
+    "finish-args": [
+        "--share=ipc",
+        "--socket=fallback-x11",
+        "--socket=wayland",
+        "--talk-name=org.a11y.Bus",
+        "--own-name=org.gnome.gimagereader.*",
+        "--talk-name=org.gtk.vfs.*",
+        "--filesystem=xdg-run/gvfsd",
+        "--env=TESSDATA_PREFIX=/app/share",
+        "--filesystem=home",
+        "--device=all"
+    ],
+    "cleanup": [
+        "/include",
+        "/lib/atkmm-1.6",
+        "/lib/cmake",
+        "/lib/cairomm-1.0",
+        "/lib/girepository-1.0",
+        "/lib/gdkmm-3.0",
+        "/lib/giomm-2.4",
+        "/lib/glibmm-2.4",
+        "/lib/gtkmm-3.0",
+        "/lib/libglibmm_generate_extra_defs*",
+        "/lib/openjpeg-*",
+        "/lib/pangomm-1.4",
+        "/lib/pkgconfig",
+        "/lib/sigc++-2.0",
+        "/man",
+        "/share/aclocal",
+        "/share/doc",
+        "/share/gir-1.0",
+        "/share/gtk-doc",
+        "/share/man",
+        "/share/pkgconfig",
+        "/share/vala",
+        "*.la",
+        "*.a"
+    ],
+    "modules": [
+        "shared-modules/intltool/intltool-0.51.json",
+        {
+            "name": "sane-backends",
+            "config-opts": [
+                "--disable-saned"
+            ],
+            "post-install": [
+                "rm /app/etc/sane.d/dll.conf",
+                "rm /app/etc/sane.d/net.conf",
+                "echo 127.0.0.1 > /app/etc/sane.d/net.conf",
+                "echo net > /app/etc/sane.d/dll.conf",
+                "echo escl >> /app/etc/sane.d/dll.conf",
+                "echo airscan >> /app/etc/sane.d/dll.conf"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://gitlab.com/sane-project/backends.git",
+                    "tag": "1.4.0",
+                    "commit": "c7e4b5e35e3d614d2b1181d760a717bfc395a203",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 4760,
+                        "tag-template": "$version"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "podofo",
+            "buildsystem": "cmake-ninja",
+            "cleanup": [
+                "/bin",
+                "/share"
+            ],
+            "config-opts": [
+                "-DPODOFO_BUILD_LIB_ONLY=1"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/podofo/podofo/archive/refs/tags/0.10.5.tar.gz",
+                    "sha256": "49b159e88ba177ad2561b5cf6cbd68ecbe83272f5488bc527e44f97dbf695273",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 10527,
+                        "url-template": "https://github.com/podofo/podofo/archive/refs/tags/$version.tar.gz",
+                        "versions": {
+                            "<": "1.0"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "djvulibre",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://downloads.sourceforge.net/djvu/djvulibre-3.5.29.tar.gz",
+                    "sha256": "d3b4b03ae2bdca8516a36ef6eb27b777f0528c9eda26745d9962824a3fdfeccf",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 10159,
+                        "url-template": "https://downloads.sourceforge.net/djvu/djvulibre-$version.tar.gz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "boost",
+            "buildsystem": "simple",
+            "build-commands": [
+                "./bootstrap.sh --prefix=/app --with-libraries=system",
+                "./b2 -j $FLATPAK_BUILDER_N_JOBS install"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.bz2",
+                    "sha256": "46d9d2c06637b219270877c9e16155cbd015b6dc84349af064c088e9b5b12f7b",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 6845,
+                        "url-template": "https://archives.boost.io/release/$version/source/boost_${major}_${minor}_$patch.tar.bz2"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "poppler",
+            "config-opts": [
+                "-DBUILD_GTK_TESTS=OFF",
+                "-DBUILD_QT5_TESTS=OFF",
+                "-DBUILD_QT6_TESTS=OFF",
+                "-DBUILD_CPP_TESTS=OFF",
+                "-DENABLE_QT5=OFF",
+                "-DENABLE_GLIB=OFF",
+                "-DENABLE_QT6=ON"
+            ],
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://poppler.freedesktop.org/poppler-25.07.0.tar.xz",
+                    "sha256": "c504a9066dbdfebe377ad53cec641fd971ee96c4e1e8ca74e6c9c03d46d817ae",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 3686,
+                        "url-template": "https://poppler.freedesktop.org/poppler-$version.tar.xz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "libzip",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DCMAKE_INSTALL_LIBDIR=/app/lib",
+                "-DCMAKE_INSTALL_INCLUDEDIR=/app/include"
+            ],
+            "cleanup": [
+                "/bin"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://libzip.org/download/libzip-1.11.4.tar.xz",
+                    "sha256": "8a247f57d1e3e6f6d11413b12a6f28a9d388de110adc0ec608d893180ed7097b",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 10649,
+                        "url-template": "https://libzip.org/download/libzip-$version.tar.xz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "libleptonica",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/DanBloomberg/leptonica/releases/download/1.85.0/leptonica-1.85.0.tar.gz",
+                    "sha256": "3745ae3bf271a6801a2292eead83ac926e3a9bc1bf622e9cd4dd0f3786e17205",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 1549,
+                        "url-template": "https://github.com/DanBloomberg/leptonica/releases/download/$version/leptonica-$version.tar.gz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "tesseract",
+            "buildsystem": "autotools",
+            "config-opts": [
+                "--disable-graphics"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/tesseract-ocr/tesseract/archive/refs/tags/5.5.1.tar.gz",
+                    "sha256": "a7a3f2a7420cb6a6a94d80c24163e183cf1d2f1bed2df3bbc397c81808a57237",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 4954,
+                        "url-template": "https://github.com/tesseract-ocr/tesseract/archive/refs/tags/$version.tar.gz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "tessdata_fast",
+            "buildsystem": "simple",
+            "build-commands": [
+                "rm -rf ${FLATPAK_DEST}/share/tessdata",
+                "mkdir -p ${FLATPAK_DEST}/share/tessdata",
+                "cp -av * ${FLATPAK_DEST}/share/tessdata/"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/tesseract-ocr/tessdata_fast",
+                    "tag": "4.1.0",
+                    "commit": "65727574dfcd264acbb0c3e07860e4e9e9b22185",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 326567,
+                        "tag-template": "$version"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "enchant",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/AbiWord/enchant/releases/download/v2.8.10/enchant-2.8.10.tar.gz",
+                    "sha256": "6db791265ace652c63a6d24f376f4c562b742284d70d3ccb9e1ce8be45b288c9",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 6601,
+                        "url-template": "https://github.com/AbiWord/enchant/releases/download/v$version/enchant-$version.tar.gz"
+                    }
+                }
+            ],
+            "cleanup": [
+                "*.a",
+                "*.la",
+                "/bin",
+                "/include",
+                "/share"
+            ]
+        },
+        {
+            "name": "qtspell",
+            "buildsystem": "cmake",
+            "config-opts": [
+                "-DQT_VER:STRING=6"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/manisandro/qtspell/archive/refs/tags/1.0.1.tar.gz",
+                    "sha256": "03bb9ef504dff352e162b91e9da89fb34d236e01da54799db69388dc9ceea4c2",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 11246,
+                        "url-template": "https://github.com/manisandro/qtspell/archive/refs/tags/$version.tar.gz"
+                    }
+                }
+            ],
+            "cleanup": [
+                "*.a",
+                "*.la",
+                "/bin",
+                "/include"
+            ]
+        },
+        {
+            "name": "quazip",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/stachenov/quazip/archive/refs/tags/v1.5.tar.gz",
+                    "sha512": "c88850f1672d20c375798c58d1cb77744ca63e93b379cf3035a528b57e83a52c1908023870152ce5fc49ad0ccf93d723dbc730b8c1d2abe18cf0b13fba3be1e1",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 4141,
+                        "url-template": "https://github.com/AbiWord/enchant/releases/download/v$version/enchant-$version.tar.gz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "gimagereader",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DINTERFACE_TYPE=qt6",
+                "-DENABLE_VERSIONCHECK=0"
+            ],
+            "post-install": [
+                "install -Dm644 data/icons/gimagereader.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/gimagereader.svg"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/manisandro/gimagereader",
+                    "tag": "v3.4.2",
+                    "commit": "6249109d4637f4309c04d6d6205fa76e23efd33b",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 8889,
+                        "tag-template": "v$version"
+                    }
+                },
+                {
+                    "type": "patch",
+                    "paths": [
+                        "patches/fix-about-dialog-logo.patch",
+                        "patches/fix_appdata.patch",
+                        "patches/fix_enchant-provider.patch"
+                    ]
+                }
+            ]
+        }
+    ]
+}
