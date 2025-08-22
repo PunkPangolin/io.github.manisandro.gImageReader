@@ -84,6 +84,7 @@
         {
             "name": "podofo",
             "buildsystem": "cmake-ninja",
+            "builddir": true,
             "cleanup": [
                 "/bin",
                 "/share"
@@ -94,15 +95,12 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/podofo/podofo/archive/refs/tags/0.10.5.tar.gz",
-                    "sha256": "49b159e88ba177ad2561b5cf6cbd68ecbe83272f5488bc527e44f97dbf695273",
+                    "url": "https://github.com/podofo/podofo/archive/refs/tags/1.0.1.tar.gz",
+                    "sha256": "188316124627a68feeb0636697f907f2cd13f48bdef7eca5fc8492f9c53ce012",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 10527,
-                        "url-template": "https://github.com/podofo/podofo/archive/refs/tags/$version.tar.gz",
-                        "versions": {
-                            "<": "1.0"
-                        }
+                        "url-template": "https://github.com/podofo/podofo/archive/refs/tags/$version.tar.gz"
                     }
                 }
             ]
@@ -132,8 +130,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.bz2",
-                    "sha256": "46d9d2c06637b219270877c9e16155cbd015b6dc84349af064c088e9b5b12f7b",
+                    "url": "https://archives.boost.io/release/1.89.0/source/boost_1_89_0.tar.bz2",
+                    "sha256": "85a33fa22621b4f314f8e85e1a5e2a9363d22e4f4992925d4bb3bc631b5a0c7a",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 6845,
@@ -158,8 +156,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-25.07.0.tar.xz",
-                    "sha256": "c504a9066dbdfebe377ad53cec641fd971ee96c4e1e8ca74e6c9c03d46d817ae",
+                    "url": "https://poppler.freedesktop.org/poppler-25.08.0.tar.xz",
+                    "sha256": "425ed4d4515a093bdcdbbaac6876f20617451edc710df6a4fd6c45dd67eb418d",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 3686,
@@ -208,7 +206,6 @@
         },
         {
             "name": "tesseract",
-            "buildsystem": "autotools",
             "config-opts": [
                 "--disable-graphics"
             ],
@@ -252,8 +249,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/AbiWord/enchant/releases/download/v2.8.10/enchant-2.8.10.tar.gz",
-                    "sha256": "6db791265ace652c63a6d24f376f4c562b742284d70d3ccb9e1ce8be45b288c9",
+                    "url": "https://github.com/AbiWord/enchant/releases/download/v2.8.12/enchant-2.8.12.tar.gz",
+                    "sha256": "20e5fab2ca0f95ba9d1ef5052fe5b028e3e1d66d4cdea6b9adfcbd3e524c2a09",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 6601,
@@ -278,8 +275,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/manisandro/qtspell/archive/refs/tags/1.0.1.tar.gz",
-                    "sha256": "03bb9ef504dff352e162b91e9da89fb34d236e01da54799db69388dc9ceea4c2",
+                    "url": "https://github.com/manisandro/qtspell/archive/refs/tags/1.0.2.tar.gz",
+                    "sha256": "faa7add9d771350a63e66bb6c9b91b130097c2399f6f85c2a9a0ea8e0ceb79d8",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 11246,
@@ -325,8 +322,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/manisandro/gimagereader",
-                    "tag": "v3.4.2",
-                    "commit": "6249109d4637f4309c04d6d6205fa76e23efd33b",
+                    "tag": "v3.4.3",
+                    "commit": "8b9c9fb7389d9ca9c5086bef15665db8268eb21e",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 8889,
@@ -336,9 +333,7 @@
                 {
                     "type": "patch",
                     "paths": [
-                        "patches/fix-about-dialog-logo.patch",
-                        "patches/fix_appdata.patch",
-                        "patches/fix_enchant-provider.patch"
+                        "patches/fix-about-dialog-logo.patch"
                     ]
                 }
             ]
