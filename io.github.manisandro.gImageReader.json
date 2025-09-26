@@ -95,8 +95,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/podofo/podofo/archive/refs/tags/1.0.1.tar.gz",
-                    "sha256": "188316124627a68feeb0636697f907f2cd13f48bdef7eca5fc8492f9c53ce012",
+                    "url": "https://github.com/podofo/podofo/archive/refs/tags/1.0.2.tar.gz",
+                    "sha256": "4f46edac16e0b3badba2e972b3e3b7d8381845fad3eb39a02562cb7a04207d45",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 10527,
@@ -156,8 +156,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-25.08.0.tar.xz",
-                    "sha256": "425ed4d4515a093bdcdbbaac6876f20617451edc710df6a4fd6c45dd67eb418d",
+                    "url": "https://poppler.freedesktop.org/poppler-25.09.1.tar.xz",
+                    "sha256": "0c1091d01d3dd1664a13816861e812d02b29201e96665454b81b52d261fad658",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 3686,
